@@ -28,7 +28,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-6 noise-bg"
+      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-6 noise-bg"
     >
       {/* Subtle gradient orbs */}
       <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-[#e50914]/[0.03] blur-[150px]" />
