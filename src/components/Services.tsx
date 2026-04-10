@@ -18,7 +18,7 @@ const services = [
   {
     title: "Content Strategy",
     description:
-      "Every decision &mdash; from topic to thumbnail to structure &mdash; engineered around data. No guesswork, no trends-chasing. Just strategy that compounds.",
+      "Every decision \u2014 from topic to thumbnail to structure \u2014 engineered around data. No guesswork, no trends-chasing. Just strategy that compounds.",
     features: [
       "Topic validation frameworks",
       "Video structure blueprints",
@@ -29,7 +29,7 @@ const services = [
   {
     title: "1:1 Consulting",
     description:
-      "Deep strategic partnership where I embed in your creative process. I don&apos;t just review videos &mdash; I reshape how you think about content.",
+      "Deep strategic partnership where I embed in your creative process. I don\u2019t just review videos \u2014 I reshape how you think about content.",
     features: [
       "Dedicated strategy sessions",
       "Pre-publish video review",
@@ -65,8 +65,8 @@ function TiltCard({
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 25;
-    const rotateY = (centerX - x) / 25;
+    const rotateX = (y - centerY) / 30;
+    const rotateY = (centerX - x) / 30;
     setTransform(
       `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`
     );
@@ -90,43 +90,41 @@ function TiltCard({
 
 export default function Services() {
   return (
-    <section id="services" className="py-32 px-6 bg-[#0a0a0a] noise-bg">
-      <div className="max-w-6xl mx-auto">
+    <section id="services" className="py-24 md:py-32 px-6 bg-[#0a0a0a]">
+      <div className="max-w-5xl mx-auto">
         <ScrollReveal>
-          <div className="mb-20">
-            <span className="text-[#555] text-xs uppercase tracking-[0.3em] font-medium mb-6 block">
+          <div className="mb-12">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#666] mb-5 block">
               Services
             </span>
-            <h2 className="font-[family-name:var(--font-space)] text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
-              What I do for
-              <br />
-              <span className="gradient-text">the creators I work with.</span>
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1]">
+              What I do for the creators{" "}
+              <span className="gradient-text">I work with.</span>
             </h2>
           </div>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid md:grid-cols-2 gap-4">
           {services.map((service, i) => (
-            <ScrollReveal key={service.title} delay={i * 0.1}>
+            <ScrollReveal key={service.title} delay={i * 0.08}>
               <TiltCard className="h-full">
-                <div className="glass-card rounded-2xl p-8 md:p-10 h-full group cursor-default">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-1 h-8 bg-gradient-to-b from-[#e50914] to-transparent rounded-full" />
-                    <h3 className="font-[family-name:var(--font-space)] text-xl font-semibold tracking-tight">
+                <div className="glass-card rounded-2xl p-6 md:p-8 h-full group cursor-default">
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="w-0.5 h-6 bg-gradient-to-b from-[#e50914] to-transparent rounded-full" />
+                    <h3 className="font-[family-name:var(--font-playfair)] text-xl font-semibold tracking-tight">
                       {service.title}
                     </h3>
                   </div>
-                  <p
-                    className="text-[#888] leading-relaxed mb-8"
-                    dangerouslySetInnerHTML={{ __html: service.description }}
-                  />
-                  <ul className="space-y-3">
+                  <p className="text-[#999] text-[15px] leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                  <ul className="space-y-2.5">
                     {service.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-center gap-3 text-sm text-[#555] group-hover:text-[#888] transition-colors"
+                        className="flex items-center gap-2.5 text-[13px] text-[#555] group-hover:text-[#888] transition-colors"
                       >
-                        <span className="w-1 h-1 bg-[#e50914]/60 rounded-full flex-shrink-0" />
+                        <span className="w-1 h-1 bg-[#e50914]/50 rounded-full flex-shrink-0" />
                         {feature}
                       </li>
                     ))}

@@ -4,7 +4,11 @@
       "mcp__Claude_Preview__preview_start",
       "Bash(gh repo:*)",
       "Bash(where gh:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "WebFetch(domain:team-human-nbj6.vercel.app)",
+      "Bash(cmdkey /list)",
+      "Bash(git credential-manager:*)",
+      "Bash(git credential:*)"
     ]
   }
 }

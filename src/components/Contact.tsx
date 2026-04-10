@@ -21,9 +21,7 @@ export default function Contact() {
     budget: "",
     newsletter: false,
   });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
-    "idle"
-  );
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,7 +29,6 @@ export default function Contact() {
 
     try {
       if (!supabase) {
-        console.warn("Supabase not configured");
         setStatus("sent");
         return;
       }
@@ -55,30 +52,29 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-32 px-6 noise-bg">
+    <section id="contact" className="py-24 md:py-32 px-6">
       <div className="max-w-3xl mx-auto">
         <ScrollReveal>
-          <div className="mb-16">
-            <span className="text-[#555] text-xs uppercase tracking-[0.3em] font-medium mb-6 block">
+          <div className="mb-12">
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#666] mb-5 block">
               Contact
             </span>
-            <h2 className="font-[family-name:var(--font-space)] text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4">
-              Let&apos;s talk about
-              <br />
+            <h2 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl font-semibold tracking-tight leading-[1.1] mb-3">
+              Let&apos;s talk about{" "}
               <span className="gradient-text">your channel.</span>
             </h2>
-            <p className="text-[#555] text-base max-w-lg">
+            <p className="text-[#666] text-base max-w-lg">
               Limited availability. Tell me about your goals and I&apos;ll let you know
               if we&apos;re a fit.
             </p>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.15}>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-5">
+        <ScrollReveal delay={0.1}>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
+                <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-[#666] mb-2">
                   Name
                 </label>
                 <input
@@ -86,12 +82,12 @@ export default function Contact() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3.5 text-white placeholder-[#333] focus:outline-none focus:border-[#e50914]/30 transition-colors text-sm"
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 text-white placeholder-[#333] focus:outline-none focus:border-white/[0.12] transition-colors text-[15px]"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
+                <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-[#666] mb-2">
                   Email
                 </label>
                 <input
@@ -99,14 +95,14 @@ export default function Contact() {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3.5 text-white placeholder-[#333] focus:outline-none focus:border-[#e50914]/30 transition-colors text-sm"
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 text-white placeholder-[#333] focus:outline-none focus:border-white/[0.12] transition-colors text-[15px]"
                   placeholder="your@email.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-[#555] text-xs uppercase tracking-wider mb-3">
+              <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-[#666] mb-2">
                 Budget
               </label>
               <div className="flex flex-wrap gap-2">
@@ -115,7 +111,7 @@ export default function Contact() {
                     key={option}
                     type="button"
                     onClick={() => setFormData({ ...formData, budget: option })}
-                    className={`px-4 py-2 rounded-lg text-xs transition-all duration-300 ${
+                    className={`px-3.5 py-1.5 rounded-lg text-[12px] transition-all duration-300 ${
                       formData.budget === option
                         ? "bg-[#e50914] text-white"
                         : "border border-white/[0.06] text-[#555] hover:text-white hover:border-white/[0.1]"
@@ -128,28 +124,28 @@ export default function Contact() {
             </div>
 
             <div>
-              <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
+              <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-[#666] mb-2">
                 About your channel & goals
               </label>
               <textarea
                 required
-                rows={5}
+                rows={4}
                 value={formData.message}
                 onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3.5 text-white placeholder-[#333] focus:outline-none focus:border-[#e50914]/30 transition-colors resize-none text-sm"
-                placeholder="What's your channel about? What challenges are you facing? What does success look like?"
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 text-white placeholder-[#333] focus:outline-none focus:border-white/[0.12] transition-colors resize-none text-[15px]"
+                placeholder="What's your channel about? What challenges are you facing?"
               />
             </div>
 
             <div>
-              <label className="flex items-center gap-3 cursor-pointer group">
+              <label className="flex items-center gap-2.5 cursor-pointer group">
                 <input
                   type="checkbox"
                   checked={formData.newsletter}
                   onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
-                  className="w-3.5 h-3.5 rounded border-white/10 bg-white/[0.03] text-[#e50914] focus:ring-0"
+                  className="w-3.5 h-3.5 rounded border-white/10 bg-white/[0.03]"
                 />
-                <span className="text-xs text-[#444] group-hover:text-[#888] transition-colors">
+                <span className="text-[12px] text-[#444] group-hover:text-[#888] transition-colors">
                   Send me retention insights (no spam)
                 </span>
               </label>
@@ -158,9 +154,9 @@ export default function Contact() {
             <motion.button
               type="submit"
               disabled={status === "sending"}
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
-              className="w-full glow-button py-4 rounded-xl text-white font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              whileHover={{ scale: 1.005 }}
+              whileTap={{ scale: 0.995 }}
+              className="w-full glow-button py-3.5 rounded-xl text-white font-medium text-[15px] disabled:opacity-50"
             >
               <span>
                 {status === "sending"

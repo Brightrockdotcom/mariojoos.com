@@ -42,22 +42,20 @@ export default function Navbar() {
           : "bg-[#050505]/80 backdrop-blur-xl border-b border-white/[0.04]"
       }`}
     >
-      <div className="w-full max-w-6xl mx-auto px-6 flex items-center justify-between">
-        {/* Left — Logo */}
+      <div className="w-full max-w-5xl mx-auto px-6 flex items-center justify-between">
         <button
           onClick={() => scrollTo("hero")}
-          className="font-[family-name:var(--font-space)] text-base font-semibold tracking-tight text-[#f5f5f5] hover:text-white transition-colors"
+          className="font-[family-name:var(--font-playfair)] text-lg font-semibold text-[#f5f5f5] hover:text-white transition-colors tracking-tight"
         >
           Mario Joos
         </button>
 
-        {/* Center — Nav links */}
         <div className="hidden lg:flex items-center gap-7">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className={`text-sm transition-colors duration-200 ${
+              className={`text-[13px] transition-colors duration-200 ${
                 activeSection === item.id
                   ? "text-[#f5f5f5]"
                   : "text-[#555] hover:text-[#999]"
@@ -68,15 +66,13 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Right — CTA */}
         <button
           onClick={() => scrollTo("contact")}
-          className="hidden lg:block text-sm text-[#555] hover:text-[#f5f5f5] transition-colors duration-200"
+          className="hidden lg:block text-[13px] text-[#555] hover:text-[#f5f5f5] transition-colors duration-200"
         >
           Get in Touch
         </button>
 
-        {/* Mobile Toggle */}
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
           className="lg:hidden p-2 -mr-2"
@@ -98,7 +94,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileOpen && (
           <motion.div
@@ -108,15 +103,13 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="lg:hidden absolute top-16 left-0 right-0 bg-[#050505]/95 backdrop-blur-xl border-b border-white/[0.06]"
           >
-            <div className="max-w-6xl mx-auto px-6 py-5 flex flex-col gap-3">
+            <div className="max-w-5xl mx-auto px-6 py-5 flex flex-col gap-3">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className={`text-left text-sm transition-colors py-1 ${
-                    activeSection === item.id
-                      ? "text-[#f5f5f5]"
-                      : "text-[#555] hover:text-[#999]"
+                  className={`text-left text-[13px] py-1 transition-colors ${
+                    activeSection === item.id ? "text-[#f5f5f5]" : "text-[#555]"
                   }`}
                 >
                   {item.label}
@@ -124,7 +117,7 @@ export default function Navbar() {
               ))}
               <button
                 onClick={() => scrollTo("contact")}
-                className="text-left text-sm text-[#555] hover:text-[#f5f5f5] transition-colors py-1 mt-1 pt-3 border-t border-white/[0.06]"
+                className="text-left text-[13px] text-[#555] hover:text-[#f5f5f5] pt-3 border-t border-white/[0.06]"
               >
                 Get in Touch
               </button>
