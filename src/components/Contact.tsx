@@ -6,11 +6,11 @@ import ScrollReveal from "./ScrollReveal";
 import { supabase } from "@/lib/supabase";
 
 const budgetOptions = [
-  "Under $5,000",
-  "$5,000 - $15,000",
-  "$15,000 - $50,000",
-  "$50,000+",
-  "Let's discuss",
+  "Under $5k",
+  "$5k \u2013 $15k",
+  "$15k \u2013 $50k",
+  "$50k+",
+  "Let\u2019s discuss",
 ];
 
 export default function Contact() {
@@ -31,7 +31,7 @@ export default function Contact() {
 
     try {
       if (!supabase) {
-        console.warn("Supabase not configured — form submission skipped");
+        console.warn("Supabase not configured");
         setStatus("sent");
         return;
       }
@@ -48,88 +48,77 @@ export default function Contact() {
 
       if (error) throw error;
       setStatus("sent");
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-        budget: "",
-        newsletter: false,
-      });
+      setFormData({ name: "", email: "", message: "", budget: "", newsletter: false });
     } catch {
       setStatus("error");
     }
   };
 
   return (
-    <section id="contact" className="py-32 px-6 bg-[#111111]">
-      <div className="max-w-4xl mx-auto">
+    <section id="contact" className="py-32 px-6 noise-bg">
+      <div className="max-w-3xl mx-auto">
         <ScrollReveal>
-          <div className="text-center mb-16">
-            <span className="text-[#e50914] text-sm font-semibold tracking-widest uppercase mb-4 block">
-              Get Started
+          <div className="mb-16">
+            <span className="text-[#555] text-xs uppercase tracking-[0.3em] font-medium mb-6 block">
+              Contact
             </span>
-            <h2 className="font-[family-name:var(--font-space)] text-4xl md:text-5xl font-bold mb-4">
-              Ready to <span className="gradient-text">Transform</span> Your
-              Channel?
+            <h2 className="font-[family-name:var(--font-space)] text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] mb-4">
+              Let&apos;s talk about
+              <br />
+              <span className="gradient-text">your channel.</span>
             </h2>
-            <p className="text-[#a0a0a0] text-lg max-w-2xl mx-auto">
-              Let&apos;s talk about how data-driven retention strategy can take
-              your content to the next level. Limited spots available.
+            <p className="text-[#555] text-base max-w-lg">
+              Limited availability. Tell me about your goals and I&apos;ll let you know
+              if we&apos;re a fit.
             </p>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.2}>
-          <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8 md:p-12">
-            <div className="grid md:grid-cols-2 gap-6 mb-6">
+        <ScrollReveal delay={0.15}>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm text-[#a0a0a0] mb-2">
+                <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
                   Name
                 </label>
                 <input
                   type="text"
                   required
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-[#666] focus:outline-none focus:border-[#e50914]/50 transition-colors"
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3.5 text-white placeholder-[#333] focus:outline-none focus:border-[#e50914]/30 transition-colors text-sm"
                   placeholder="Your name"
                 />
               </div>
               <div>
-                <label className="block text-sm text-[#a0a0a0] mb-2">
+                <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
                   Email
                 </label>
                 <input
                   type="email"
                   required
                   value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-[#666] focus:outline-none focus:border-[#e50914]/50 transition-colors"
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3.5 text-white placeholder-[#333] focus:outline-none focus:border-[#e50914]/30 transition-colors text-sm"
                   placeholder="your@email.com"
                 />
               </div>
             </div>
 
-            <div className="mb-6">
-              <label className="block text-sm text-[#a0a0a0] mb-2">
-                Budget Range
+            <div>
+              <label className="block text-[#555] text-xs uppercase tracking-wider mb-3">
+                Budget
               </label>
               <div className="flex flex-wrap gap-2">
                 {budgetOptions.map((option) => (
                   <button
                     key={option}
                     type="button"
-                    onClick={() =>
-                      setFormData({ ...formData, budget: option })
-                    }
-                    className={`px-4 py-2 rounded-full text-sm transition-all ${
+                    onClick={() => setFormData({ ...formData, budget: option })}
+                    className={`px-4 py-2 rounded-lg text-xs transition-all duration-300 ${
                       formData.budget === option
                         ? "bg-[#e50914] text-white"
-                        : "glass-card text-[#a0a0a0] hover:text-white hover:border-white/20"
+                        : "border border-white/[0.06] text-[#555] hover:text-white hover:border-white/[0.1]"
                     }`}
                   >
                     {option}
@@ -138,34 +127,30 @@ export default function Contact() {
               </div>
             </div>
 
-            <div className="mb-6">
-              <label className="block text-sm text-[#a0a0a0] mb-2">
-                Tell me about your channel & goals
+            <div>
+              <label className="block text-[#555] text-xs uppercase tracking-wider mb-2">
+                About your channel & goals
               </label>
               <textarea
                 required
                 rows={5}
                 value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-[#666] focus:outline-none focus:border-[#e50914]/50 transition-colors resize-none"
-                placeholder="What's your channel about? What are your current challenges? What goals do you want to hit?"
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                className="w-full bg-white/[0.03] border border-white/[0.06] rounded-xl px-5 py-3.5 text-white placeholder-[#333] focus:outline-none focus:border-[#e50914]/30 transition-colors resize-none text-sm"
+                placeholder="What's your channel about? What challenges are you facing? What does success look like?"
               />
             </div>
 
-            <div className="mb-8">
-              <label className="flex items-center gap-3 cursor-pointer">
+            <div>
+              <label className="flex items-center gap-3 cursor-pointer group">
                 <input
                   type="checkbox"
                   checked={formData.newsletter}
-                  onChange={(e) =>
-                    setFormData({ ...formData, newsletter: e.target.checked })
-                  }
-                  className="w-4 h-4 rounded border-white/20 bg-white/5 text-[#e50914] focus:ring-[#e50914]/50"
+                  onChange={(e) => setFormData({ ...formData, newsletter: e.target.checked })}
+                  className="w-3.5 h-3.5 rounded border-white/10 bg-white/[0.03] text-[#e50914] focus:ring-0"
                 />
-                <span className="text-sm text-[#a0a0a0]">
-                  Send me retention tips & insights (no spam, ever)
+                <span className="text-xs text-[#444] group-hover:text-[#888] transition-colors">
+                  Send me retention insights (no spam)
                 </span>
               </label>
             </div>
@@ -173,28 +158,20 @@ export default function Contact() {
             <motion.button
               type="submit"
               disabled={status === "sending"}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full glow-button py-4 rounded-full text-white font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+              className="w-full glow-button py-4 rounded-xl text-white font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {status === "sending"
-                ? "Sending..."
-                : status === "sent"
-                ? "Message Sent!"
-                : status === "error"
-                ? "Error — Try Again"
-                : "Let's Work Together"}
+              <span>
+                {status === "sending"
+                  ? "Sending..."
+                  : status === "sent"
+                  ? "Sent \u2014 I\u2019ll be in touch."
+                  : status === "error"
+                  ? "Something went wrong. Try again."
+                  : "Send Message"}
+              </span>
             </motion.button>
-
-            {status === "sent" && (
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center text-green-400 mt-4 text-sm"
-              >
-                Thanks! I&apos;ll get back to you within 24 hours.
-              </motion.p>
-            )}
           </form>
         </ScrollReveal>
       </div>

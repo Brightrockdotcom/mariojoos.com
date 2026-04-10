@@ -5,21 +5,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 
 const navItems = [
-  { id: "hero", label: "Home" },
   { id: "about", label: "About" },
   { id: "services", label: "Services" },
   { id: "stats", label: "Results" },
   { id: "clients", label: "Clients" },
-  { id: "case-studies", label: "Case Studies" },
+  { id: "case-studies", label: "Work" },
   { id: "testimonials", label: "Testimonials" },
-  { id: "contact", label: "Contact" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const activeSection = useScrollSpy(
-    navItems.map((item) => item.id),
+    ["hero", ...navItems.map((item) => item.id), "contact"],
     150
   );
 
@@ -41,41 +39,34 @@ export default function Navbar() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
         isScrolled
-          ? "bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5"
+          ? "bg-[#050505]/70 backdrop-blur-2xl border-b border-white/[0.04]"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
         <button
           onClick={() => scrollTo("hero")}
-          className="font-[family-name:var(--font-space)] text-xl font-bold tracking-tight"
+          className="font-[family-name:var(--font-space)] text-sm font-semibold tracking-[0.15em] uppercase text-white/80 hover:text-white transition-colors"
         >
-          MARIO<span className="gradient-text">JOOS</span>
+          Mario Joos
         </button>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
-              className={`relative px-3 py-2 text-sm transition-colors duration-200 ${
+              className={`text-xs uppercase tracking-[0.15em] transition-colors duration-300 ${
                 activeSection === item.id
                   ? "text-white"
-                  : "text-[#a0a0a0] hover:text-white"
+                  : "text-[#444] hover:text-[#888]"
               }`}
             >
-              {activeSection === item.id && (
-                <motion.div
-                  layoutId="activeNav"
-                  className="absolute inset-0 bg-white/5 rounded-lg"
-                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                />
-              )}
-              <span className="relative z-10">{item.label}</span>
+              {item.label}
             </button>
           ))}
         </div>
@@ -83,9 +74,9 @@ export default function Navbar() {
         {/* CTA */}
         <button
           onClick={() => scrollTo("contact")}
-          className="hidden md:block glow-button px-5 py-2 rounded-full text-sm font-semibold text-white"
+          className="hidden md:block text-xs uppercase tracking-[0.15em] text-[#e50914] hover:text-[#ff2d2d] transition-colors font-medium"
         >
-          Work With Me
+          Get in Touch
         </button>
 
         {/* Mobile Toggle */}
@@ -95,17 +86,15 @@ export default function Navbar() {
         >
           <motion.span
             animate={isMobileOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="w-6 h-0.5 bg-white block"
+            className="w-5 h-px bg-white block"
           />
           <motion.span
             animate={isMobileOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="w-6 h-0.5 bg-white block"
+            className="w-5 h-px bg-white block"
           />
           <motion.span
-            animate={
-              isMobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }
-            }
-            className="w-6 h-0.5 bg-white block"
+            animate={isMobileOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+            className="w-5 h-px bg-white block"
           />
         </button>
       </div>
@@ -117,27 +106,23 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/5"
+            className="md:hidden bg-[#050505]/95 backdrop-blur-2xl border-b border-white/[0.04]"
           >
-            <div className="px-6 py-4 flex flex-col gap-2">
+            <div className="px-6 py-6 flex flex-col gap-4">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className={`text-left py-2 text-sm transition-colors ${
-                    activeSection === item.id
-                      ? "text-white"
-                      : "text-[#a0a0a0]"
-                  }`}
+                  className="text-left text-xs uppercase tracking-[0.15em] text-[#444] hover:text-white transition-colors"
                 >
                   {item.label}
                 </button>
               ))}
               <button
                 onClick={() => scrollTo("contact")}
-                className="glow-button mt-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white text-center"
+                className="text-left text-xs uppercase tracking-[0.15em] text-[#e50914] font-medium mt-2"
               >
-                Work With Me
+                Get in Touch
               </button>
             </div>
           </motion.div>

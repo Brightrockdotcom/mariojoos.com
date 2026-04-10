@@ -1,56 +1,51 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 import ScrollReveal from "./ScrollReveal";
 
 const services = [
   {
-    title: "Audience Retention Analysis",
+    title: "Retention Analysis",
     description:
-      "Deep-dive analysis of your audience retention graphs, identifying exact drop-off points and patterns. I decode viewer behavior to find what keeps them watching — and what makes them leave.",
-    icon: "01",
+      "Frame-by-frame analysis of where viewers drop off and why. I decode the data others overlook to find the exact moments that make or break a video.",
     features: [
-      "Frame-by-frame retention analysis",
-      "Drop-off pattern identification",
-      "Benchmark comparison",
-      "Actionable improvement roadmap",
+      "Drop-off pattern mapping",
+      "Benchmark comparisons",
+      "Pacing optimization",
+      "Actionable improvement plans",
     ],
   },
   {
     title: "Content Strategy",
     description:
-      "End-to-end content strategy built on data, not guesswork. From topic selection to video structure, every decision is engineered to maximize watch time and subscriber conversion.",
-    icon: "02",
+      "Every decision &mdash; from topic to thumbnail to structure &mdash; engineered around data. No guesswork, no trends-chasing. Just strategy that compounds.",
     features: [
-      "Topic research & validation",
+      "Topic validation frameworks",
       "Video structure blueprints",
-      "Thumbnail & title strategy",
-      "Publishing cadence optimization",
+      "Title & thumbnail strategy",
+      "Publishing cadence design",
     ],
   },
   {
-    title: "Creator Consulting",
+    title: "1:1 Consulting",
     description:
-      "One-on-one strategic partnership with hands-on guidance. I embed myself in your creative process to transform how you think about content, retention, and growth.",
-    icon: "03",
+      "Deep strategic partnership where I embed in your creative process. I don&apos;t just review videos &mdash; I reshape how you think about content.",
     features: [
-      "1-on-1 strategy sessions",
-      "Pre-publish video reviews",
+      "Dedicated strategy sessions",
+      "Pre-publish video review",
       "Real-time analytics feedback",
-      "Long-term growth planning",
+      "Long-term growth architecture",
     ],
   },
   {
-    title: "Channel Growth Architecture",
+    title: "Channel Architecture",
     description:
-      "Complete channel optimization from the algorithm level up. I architect your channel's growth engine — from metadata to viewer journey — to compound views over time.",
-    icon: "04",
+      "Complete channel optimization from the algorithm level up. I build growth engines that compound views and subscribers over time.",
     features: [
-      "Algorithm optimization",
-      "Channel page redesign",
+      "Algorithm positioning",
       "Series & playlist strategy",
       "Cross-promotion frameworks",
+      "Viewer journey mapping",
     ],
   },
 ];
@@ -70,10 +65,10 @@ function TiltCard({
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 20;
-    const rotateY = (centerX - x) / 20;
+    const rotateX = (y - centerY) / 25;
+    const rotateY = (centerX - x) / 25;
     setTransform(
-      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
+      `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`
     );
   };
 
@@ -85,7 +80,7 @@ function TiltCard({
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ transform, transition: "transform 0.15s ease-out" }}
+      style={{ transform, transition: "transform 0.2s ease-out" }}
       className={className}
     >
       {children}
@@ -95,55 +90,48 @@ function TiltCard({
 
 export default function Services() {
   return (
-    <section id="services" className="py-32 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section id="services" className="py-32 px-6 bg-[#0a0a0a] noise-bg">
+      <div className="max-w-6xl mx-auto">
         <ScrollReveal>
-          <div className="text-center mb-16">
-            <span className="text-[#e50914] text-sm font-semibold tracking-widest uppercase mb-4 block">
+          <div className="mb-20">
+            <span className="text-[#555] text-xs uppercase tracking-[0.3em] font-medium mb-6 block">
               Services
             </span>
-            <h2 className="font-[family-name:var(--font-space)] text-4xl md:text-5xl font-bold mb-4">
-              How I <span className="gradient-text">Transform</span> Channels
+            <h2 className="font-[family-name:var(--font-space)] text-4xl md:text-5xl font-bold tracking-tight leading-[1.1]">
+              What I do for
+              <br />
+              <span className="gradient-text">the creators I work with.</span>
             </h2>
-            <p className="text-[#a0a0a0] text-lg max-w-2xl mx-auto">
-              Every service is built on the same foundation: obsessive data
-              analysis combined with creative intuition that comes from years at
-              the top.
-            </p>
           </div>
         </ScrollReveal>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-5">
           {services.map((service, i) => (
             <ScrollReveal key={service.title} delay={i * 0.1}>
-              <TiltCard>
-                <motion.div
-                  whileHover={{ borderColor: "rgba(229, 9, 20, 0.3)" }}
-                  className="glass-card rounded-2xl p-8 h-full group cursor-default"
-                >
-                  <div className="flex items-start justify-between mb-6">
-                    <span className="font-[family-name:var(--font-space)] text-4xl font-bold text-white/10 group-hover:text-[#e50914]/30 transition-colors">
-                      {service.icon}
-                    </span>
+              <TiltCard className="h-full">
+                <div className="glass-card rounded-2xl p-8 md:p-10 h-full group cursor-default">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-1 h-8 bg-gradient-to-b from-[#e50914] to-transparent rounded-full" />
+                    <h3 className="font-[family-name:var(--font-space)] text-xl font-semibold tracking-tight">
+                      {service.title}
+                    </h3>
                   </div>
-                  <h3 className="font-[family-name:var(--font-space)] text-2xl font-bold mb-3 group-hover:gradient-text transition-all">
-                    {service.title}
-                  </h3>
-                  <p className="text-[#a0a0a0] mb-6 leading-relaxed">
-                    {service.description}
-                  </p>
-                  <ul className="space-y-2">
+                  <p
+                    className="text-[#888] leading-relaxed mb-8"
+                    dangerouslySetInnerHTML={{ __html: service.description }}
+                  />
+                  <ul className="space-y-3">
                     {service.features.map((feature) => (
                       <li
                         key={feature}
-                        className="flex items-center gap-2 text-sm text-[#a0a0a0]"
+                        className="flex items-center gap-3 text-sm text-[#555] group-hover:text-[#888] transition-colors"
                       >
-                        <span className="w-1.5 h-1.5 bg-[#e50914] rounded-full flex-shrink-0" />
+                        <span className="w-1 h-1 bg-[#e50914]/60 rounded-full flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
-                </motion.div>
+                </div>
               </TiltCard>
             </ScrollReveal>
           ))}
