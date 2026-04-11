@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCountUp } from "@/hooks/useCountUp";
 
@@ -30,6 +31,20 @@ export default function Hero() {
       id="hero"
       className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-6"
     >
+      {/* Background face */}
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
+        <div className="relative w-[500px] h-[600px] md:w-[600px] md:h-[750px] opacity-[0.07]">
+          <Image
+            src="/images/bannermario.png"
+            alt=""
+            fill
+            className="object-cover object-top"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-[#050505]/60" />
+        </div>
+      </div>
+
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.02] blur-[150px]" />
 
       <motion.div
