@@ -134,12 +134,12 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+        className="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-[1.5fr_1fr] gap-10 lg:gap-16 items-center"
       >
         {/* LEFT — who I am, with headshot behind the text */}
         <div className="relative text-center lg:text-left">
-          {/* Transparent headshot sitting behind the heading */}
-          <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-24 lg:-top-28 w-[360px] h-[520px] md:w-[420px] md:h-[600px] -z-10">
+          {/* Transparent headshot — beside the text on desktop, behind it on mobile */}
+          <div className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 -top-24 w-[360px] h-[520px] md:w-[420px] md:h-[600px] lg:left-auto lg:right-[-80px] lg:translate-x-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-[320px] lg:h-[460px]">
             <Image
               src="/images/bannermario.png"
               alt="Mario Joos"
@@ -155,12 +155,12 @@ export default function Hero({ creators }: { creators: Creator[] }) {
             Retention Strategy &mdash; YouTube Growth
           </span>
 
-          <h1 className="relative font-[family-name:var(--font-poppins)] text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-[-0.01em] mb-5 [text-shadow:0_2px_30px_rgba(5,5,5,0.85)]">
+          <h1 className="relative font-[family-name:var(--font-poppins)] text-4xl md:text-5xl lg:text-5xl lg:max-w-[380px] font-bold leading-[1.1] tracking-[-0.01em] mb-5 [text-shadow:0_2px_30px_rgba(5,5,5,0.85)]">
             The strategist behind YouTube&apos;s biggest{" "}
             <span className="gradient-text">creators.</span>
           </h1>
 
-          <p className="relative text-[#c4c4c4] text-lg md:text-xl max-w-md mx-auto lg:mx-0 mb-6 leading-relaxed [text-shadow:0_2px_20px_rgba(5,5,5,0.9)]">
+          <p className="relative text-[#c4c4c4] text-lg md:text-xl max-w-md lg:max-w-[360px] mx-auto lg:mx-0 mb-6 leading-relaxed [text-shadow:0_2px_20px_rgba(5,5,5,0.9)]">
             I turn retention data into strategies that keep audiences watching.
             Sign up below, or tell me about your channel.
           </p>
@@ -183,7 +183,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         </div>
 
         {/* RIGHT — the two actions */}
-        <div className="glass-card rounded-2xl p-6 md:p-7 space-y-6 bg-[#0c0c0c]/70 backdrop-blur-md">
+        <div className="glass-card rounded-2xl p-6 md:p-7 space-y-6 bg-[#0c0c0c]/90 backdrop-blur-md">
           {/* Newsletter */}
           <div>
             <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold tracking-tight mb-1">
