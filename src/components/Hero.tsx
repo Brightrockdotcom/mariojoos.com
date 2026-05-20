@@ -150,12 +150,12 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative z-10 w-full max-w-6xl mx-auto hero-grid gap-10 lg:gap-16 items-center"
+        className="relative z-10 w-full max-w-6xl mx-auto hero-grid gap-10 min-[860px]:gap-14 items-center"
       >
-        {/* LEFT — who I am, with headshot behind the text */}
-        <div className="relative text-center lg:text-left">
+        {/* LEFT — who I am, with headshot beside the text on wide screens */}
+        <div className="relative text-center min-[860px]:text-left">
           {/* Transparent headshot — beside the text on desktop, behind it on mobile */}
-          <div className="pointer-events-none absolute -z-10 left-1/2 -translate-x-1/2 -top-24 w-[360px] h-[520px] md:w-[420px] md:h-[600px] lg:left-auto lg:right-[-80px] lg:translate-x-0 lg:top-1/2 lg:-translate-y-1/2 lg:w-[320px] lg:h-[460px]">
+          <div className="hidden lg:block pointer-events-none absolute -z-10 lg:left-auto lg:right-[-80px] lg:top-1/2 lg:-translate-y-1/2 lg:w-[320px] lg:h-[460px]">
             <Image
               src="/images/bannermario.png"
               alt="Mario Joos"
