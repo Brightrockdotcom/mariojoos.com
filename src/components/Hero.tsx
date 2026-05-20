@@ -29,23 +29,9 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-6"
+      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-6 py-20"
     >
-      {/* Background face */}
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none">
-        <div className="relative w-[500px] h-[600px] md:w-[600px] md:h-[750px] opacity-[0.07]">
-          <Image
-            src="/images/bannermario.png"
-            alt=""
-            fill
-            className="object-cover object-top"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-[#050505]/60" />
-        </div>
-      </div>
-
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.02] blur-[150px]" />
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.04] blur-[150px]" />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -53,6 +39,27 @@ export default function Hero() {
         transition={{ duration: 1.2 }}
         className="relative z-10 text-center max-w-3xl mx-auto"
       >
+        {/* Centered portrait */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 12 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="mb-10 flex justify-center"
+        >
+          <div className="relative w-40 h-40 md:w-52 md:h-52">
+            <div className="absolute -inset-4 rounded-full bg-gradient-to-tr from-[#e50914]/25 to-[#ff6b35]/20 blur-2xl" />
+            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 ring-1 ring-white/5 shadow-2xl shadow-[#e50914]/10">
+              <Image
+                src="/images/bannermario.png"
+                alt="Mario Joos"
+                fill
+                className="object-cover object-top"
+                priority
+              />
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

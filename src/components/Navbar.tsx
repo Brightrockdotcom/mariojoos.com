@@ -7,9 +7,10 @@ import { useScrollSpy } from "@/hooks/useScrollSpy";
 const navItems = [
   { id: "about", label: "About" },
   { id: "services", label: "Services" },
+  { id: "retention", label: "Retention" },
   { id: "case-studies", label: "Work" },
-  { id: "clients", label: "Clients" },
   { id: "testimonials", label: "Testimonials" },
+  { id: "newsletter", label: "Newsletter" },
 ];
 
 export default function Navbar() {
