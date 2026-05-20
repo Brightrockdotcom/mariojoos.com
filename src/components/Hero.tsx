@@ -5,18 +5,13 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useCountUp } from "@/hooks/useCountUp";
 import { supabase } from "@/lib/supabase";
-
-const creators = [
-  "MrBeast", "KSI", "Stokes Twins", "Preston", "Unspeakable", "ZHC",
-  "Dude Perfect", "SSSniperWolf", "Aphmau", "Ninja", "Typical Gamer",
-  "Lazarbeam", "Lachlan", "Muselk", "Kwebbelkop", "Jelly",
-];
+import type { Creator } from "@/lib/creators";
 
 function StatCounter({ end, suffix, label }: { end: number; suffix: string; label: string }) {
   const { count, ref } = useCountUp(end, 2500);
   return (
     <div ref={ref} className="text-center px-4 py-2">
-      <div className="font-[family-name:var(--font-poppins)] text-xl md:text-2xl font-semibold text-white tracking-tight">
+      <div className="font-[family-name:var(--font-poppins)] text-xl md:text-2xl font-bold text-white tracking-tight">
         {count}
         <span className="text-[#e50914]">{suffix}</span>
       </div>
@@ -25,20 +20,51 @@ function StatCounter({ end, suffix, label }: { end: number; suffix: string; labe
   );
 }
 
-function CreatorMarquee() {
+function initials(name: string | null): string {
+  if (!name) return "?";
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function CreatorAvatar({ creator }: { creator: Creator }) {
+  const [imgFailed, setImgFailed] = useState(false);
+  const showImg = creator.profileImageUrl && !imgFailed;
+  return (
+    <span className="flex items-center gap-2.5 mx-3 flex-shrink-0">
+      <span className="relative w-7 h-7 rounded-full overflow-hidden border border-white/10 bg-[#1a1a1a] flex items-center justify-center">
+        {showImg ? (
+          // Remote, unknown host — use a plain img with graceful fallback to initials.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={creator.profileImageUrl as string}
+            alt=""
+            className="w-full h-full object-cover"
+            loading="lazy"
+            onError={() => setImgFailed(true)}
+          />
+        ) : (
+          <span className="text-[10px] font-bold text-[#aaa]">{initials(creator.name)}</span>
+        )}
+      </span>
+      <span className="text-[13px] font-semibold text-[#bdbdbd] whitespace-nowrap">
+        {creator.name ?? "Verified creator"}
+      </span>
+    </span>
+  );
+}
+
+function CreatorMarquee({ creators }: { creators: Creator[] }) {
+  if (creators.length === 0) return null;
   const doubled = [...creators, ...creators];
   return (
     <div className="relative w-full overflow-hidden">
       <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#050505] to-transparent z-10" />
       <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#050505] to-transparent z-10" />
-      <div className="flex animate-scroll-left" style={{ animationDuration: "50s" }}>
-        {doubled.map((name, i) => (
-          <span
-            key={`${name}-${i}`}
-            className="flex-shrink-0 mx-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#8a8a8a] whitespace-nowrap"
-          >
-            {name}
-          </span>
+      <div className="flex animate-scroll-left items-center" style={{ animationDuration: "55s" }}>
+        {doubled.map((c, i) => (
+          <CreatorAvatar key={`${c.channelId}-${i}`} creator={c} />
         ))}
       </div>
     </div>
@@ -48,7 +74,7 @@ function CreatorMarquee() {
 const inputClass =
   "w-full bg-[#141414] border border-white/[0.12] rounded-lg px-3.5 py-3 text-white placeholder-[#777] focus:outline-none focus:border-white/[0.25] transition-colors text-[15px]";
 
-export default function Hero() {
+export default function Hero({ creators }: { creators: Creator[] }) {
   // Newsletter
   const [email, setEmail] = useState("");
   const [nlStatus, setNlStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -102,7 +128,7 @@ export default function Hero() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center px-6 py-10 overflow-hidden"
     >
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.04] blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.05] blur-[150px] pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -110,43 +136,54 @@ export default function Hero() {
         transition={{ duration: 1 }}
         className="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-16 items-center"
       >
-        {/* LEFT — who I am */}
-        <div className="text-center lg:text-left">
-          <div className="flex justify-center lg:justify-start mb-6">
-            <div className="relative w-28 h-28 md:w-32 md:h-32">
-              <div className="absolute -inset-3 rounded-full bg-gradient-to-tr from-[#e50914]/25 to-[#ff6b35]/20 blur-2xl" />
-              <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 ring-1 ring-white/5 shadow-2xl shadow-[#e50914]/10">
-                <Image src="/images/bannermario.png" alt="Mario Joos" fill className="object-cover object-top" priority />
-              </div>
-            </div>
+        {/* LEFT — who I am, with headshot behind the text */}
+        <div className="relative text-center lg:text-left">
+          {/* Transparent headshot sitting behind the heading */}
+          <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 -top-24 lg:-top-28 w-[360px] h-[520px] md:w-[420px] md:h-[600px] -z-10">
+            <Image
+              src="/images/bannermario.png"
+              alt="Mario Joos"
+              fill
+              sizes="(max-width: 768px) 360px, 420px"
+              className="object-contain object-bottom opacity-90 [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_85%)]"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
           </div>
 
-          <span className="text-[#a8a8a8] text-[11px] font-bold uppercase tracking-[0.18em] block mb-4">
+          <span className="relative text-[#a8a8a8] text-[11px] font-bold uppercase tracking-[0.18em] block mb-4">
             Retention Strategy &mdash; YouTube Growth
           </span>
 
-          <h1 className="font-[family-name:var(--font-poppins)] text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-[-0.01em] mb-5">
+          <h1 className="relative font-[family-name:var(--font-poppins)] text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-[-0.01em] mb-5 [text-shadow:0_2px_30px_rgba(5,5,5,0.85)]">
             The strategist behind YouTube&apos;s biggest{" "}
             <span className="gradient-text">creators.</span>
           </h1>
 
-          <p className="text-[#c4c4c4] text-lg md:text-xl max-w-md mx-auto lg:mx-0 mb-6 leading-relaxed">
+          <p className="relative text-[#c4c4c4] text-lg md:text-xl max-w-md mx-auto lg:mx-0 mb-6 leading-relaxed [text-shadow:0_2px_20px_rgba(5,5,5,0.9)]">
             I turn retention data into strategies that keep audiences watching.
             Sign up below, or tell me about your channel.
           </p>
 
-          <div className="inline-flex glass-card rounded-xl divide-x divide-white/[0.06] mb-8">
+          <div className="relative inline-flex glass-card rounded-xl divide-x divide-white/[0.06] mb-8">
             <StatCounter end={10} suffix="B+" label="Views" />
             <StatCounter end={5000} suffix="+" label="Videos" />
             <StatCounter end={8} suffix="yr" label="Experience" />
             <StatCounter end={200} suffix="+" label="Creators" />
           </div>
 
-          <CreatorMarquee />
+          {creators.length > 0 && (
+            <div className="relative">
+              <p className="text-[#7d7d7d] text-[11px] font-semibold uppercase tracking-[0.15em] mb-3">
+                Verified creators
+              </p>
+              <CreatorMarquee creators={creators} />
+            </div>
+          )}
         </div>
 
         {/* RIGHT — the two actions */}
-        <div className="glass-card rounded-2xl p-6 md:p-7 space-y-6">
+        <div className="glass-card rounded-2xl p-6 md:p-7 space-y-6 bg-[#0c0c0c]/70 backdrop-blur-md">
           {/* Newsletter */}
           <div>
             <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold tracking-tight mb-1">
@@ -154,7 +191,7 @@ export default function Hero() {
             </h2>
             <p className="text-[#a8a8a8] text-[14px] mb-3">Retention tactics in your inbox. No fluff.</p>
             {nlStatus === "sent" ? (
-              <p className="text-[#ff6b35] text-sm font-mono py-2">You&apos;re in. Check your inbox.</p>
+              <p className="text-[#ff6b35] text-sm py-2">You&apos;re in. Check your inbox.</p>
             ) : (
               <form onSubmit={handleNewsletter} className="flex gap-2">
                 <input
