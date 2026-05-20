@@ -20,6 +20,14 @@ function StatCounter({ end, suffix, label }: { end: number; suffix: string; labe
   );
 }
 
+// Reduce a large follower total to an integer + unit suffix the counter can animate.
+function formatCount(n: number): { end: number; suffix: string } {
+  if (n >= 1_000_000_000) return { end: Math.round(n / 1_000_000_000), suffix: "B+" };
+  if (n >= 1_000_000) return { end: Math.round(n / 1_000_000), suffix: "M+" };
+  if (n >= 1_000) return { end: Math.round(n / 1_000), suffix: "K+" };
+  return { end: Math.max(0, Math.round(n)), suffix: "+" };
+}
+
 function initials(name: string | null): string {
   if (!name) return "?";
   const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -75,6 +83,14 @@ const inputClass =
   "w-full bg-[#141414] border border-white/[0.12] rounded-lg px-3.5 py-3 text-white placeholder-[#777] focus:outline-none focus:border-white/[0.25] transition-colors text-[15px]";
 
 export default function Hero({ creators }: { creators: Creator[] }) {
+  // Live stats derived from the verified-creators data (fallbacks when empty).
+  const hasData = creators.length > 0;
+  const creatorCount = hasData ? creators.length : 200;
+  const totalFollowers = hasData
+    ? creators.reduce((sum, c) => sum + (c.followerCount ?? 0), 0)
+    : 1_200_000_000;
+  const followers = formatCount(totalFollowers);
+
   // Newsletter
   const [email, setEmail] = useState("");
   const [nlStatus, setNlStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
@@ -167,9 +183,8 @@ export default function Hero({ creators }: { creators: Creator[] }) {
 
           <div className="relative inline-flex glass-card rounded-xl divide-x divide-white/[0.06] mb-8">
             <StatCounter end={10} suffix="B+" label="Views" />
-            <StatCounter end={5000} suffix="+" label="Videos" />
-            <StatCounter end={8} suffix="yr" label="Experience" />
-            <StatCounter end={200} suffix="+" label="Creators" />
+            <StatCounter end={followers.end} suffix={followers.suffix} label="Followers" />
+            <StatCounter end={creatorCount} suffix="+" label="Creators" />
           </div>
 
           {creators.length > 0 && (

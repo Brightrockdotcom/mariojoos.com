@@ -24,13 +24,20 @@ html {
 }
 
 body {
-  background-color: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
   font-family: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
   font-size: 17px;
   line-height: 1.65;
   letter-spacing: 0.01em;
+  /* Subtle grid-line background (Brightrock-style), faded toward the edges */
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse 120% 95% at 50% 28%, transparent 42%, var(--bg-primary) 92%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 100% 100%, 64px 64px, 64px 64px;
+  background-attachment: fixed;
 }
 
 ::selection {
