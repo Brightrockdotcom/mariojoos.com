@@ -139,7 +139,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         {/* LEFT — who I am, with headshot behind the text */}
         <div className="relative text-center lg:text-left">
           {/* Transparent headshot sitting behind the heading */}
-          <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 lg:left-auto lg:right-0 lg:translate-x-0 -top-24 lg:-top-28 w-[360px] h-[520px] md:w-[420px] md:h-[600px] -z-10">
+          <div className="pointer-events-none absolute left-1/2 -translate-x-1/2 -top-24 lg:-top-28 w-[360px] h-[520px] md:w-[420px] md:h-[600px] -z-10">
             <Image
               src="/images/bannermario.png"
               alt="Mario Joos"
