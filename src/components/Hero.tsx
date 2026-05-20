@@ -16,11 +16,11 @@ function StatCounter({ end, suffix, label }: { end: number; suffix: string; labe
   const { count, ref } = useCountUp(end, 2500);
   return (
     <div ref={ref} className="text-center px-4 py-2">
-      <div className="font-[family-name:var(--font-playfair)] text-xl md:text-2xl font-semibold text-white tracking-tight">
+      <div className="font-[family-name:var(--font-poppins)] text-xl md:text-2xl font-semibold text-white tracking-tight">
         {count}
         <span className="text-[#e50914]">{suffix}</span>
       </div>
-      <div className="text-[#666] text-[9px] uppercase tracking-[0.15em] font-mono">{label}</div>
+      <div className="text-[#9a9a9a] text-[10px] uppercase tracking-[0.12em] font-medium mt-0.5">{label}</div>
     </div>
   );
 }
@@ -35,7 +35,7 @@ function CreatorMarquee() {
         {doubled.map((name, i) => (
           <span
             key={`${name}-${i}`}
-            className="flex-shrink-0 mx-4 font-mono text-[11px] uppercase tracking-[0.15em] text-[#555] whitespace-nowrap"
+            className="flex-shrink-0 mx-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#8a8a8a] whitespace-nowrap"
           >
             {name}
           </span>
@@ -46,7 +46,7 @@ function CreatorMarquee() {
 }
 
 const inputClass =
-  "w-full bg-[#111] border border-white/[0.08] rounded-lg px-3.5 py-2.5 text-white placeholder-[#444] focus:outline-none focus:border-white/[0.15] transition-colors text-[14px]";
+  "w-full bg-[#141414] border border-white/[0.12] rounded-lg px-3.5 py-3 text-white placeholder-[#777] focus:outline-none focus:border-white/[0.25] transition-colors text-[15px]";
 
 export default function Hero() {
   // Newsletter
@@ -121,16 +121,16 @@ export default function Hero() {
             </div>
           </div>
 
-          <span className="text-[#666] text-[10px] uppercase tracking-[0.2em] font-mono block mb-4">
+          <span className="text-[#a8a8a8] text-[11px] font-bold uppercase tracking-[0.18em] block mb-4">
             Retention Strategy &mdash; YouTube Growth
           </span>
 
-          <h1 className="font-[family-name:var(--font-playfair)] text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] tracking-[-0.02em] mb-5">
+          <h1 className="font-[family-name:var(--font-poppins)] text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-[-0.01em] mb-5">
             The strategist behind YouTube&apos;s biggest{" "}
             <span className="gradient-text">creators.</span>
           </h1>
 
-          <p className="text-[#999] text-base md:text-lg max-w-md mx-auto lg:mx-0 mb-6 leading-relaxed">
+          <p className="text-[#c4c4c4] text-lg md:text-xl max-w-md mx-auto lg:mx-0 mb-6 leading-relaxed">
             I turn retention data into strategies that keep audiences watching.
             Sign up below, or tell me about your channel.
           </p>
@@ -149,10 +149,10 @@ export default function Hero() {
         <div className="glass-card rounded-2xl p-6 md:p-7 space-y-6">
           {/* Newsletter */}
           <div>
-            <h2 className="font-[family-name:var(--font-playfair)] text-xl font-semibold tracking-tight mb-1">
+            <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold tracking-tight mb-1">
               Get the <span className="gradient-text">newsletter.</span>
             </h2>
-            <p className="text-[#666] text-[13px] mb-3">Retention tactics in your inbox. No fluff.</p>
+            <p className="text-[#a8a8a8] text-[14px] mb-3">Retention tactics in your inbox. No fluff.</p>
             {nlStatus === "sent" ? (
               <p className="text-[#ff6b35] text-sm font-mono py-2">You&apos;re in. Check your inbox.</p>
             ) : (
@@ -170,7 +170,7 @@ export default function Hero() {
                   disabled={nlStatus === "sending"}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="glow-button px-5 py-2.5 rounded-lg text-white font-medium text-[14px] disabled:opacity-50 whitespace-nowrap"
+                  className="glow-button px-5 py-3 rounded-lg text-white font-semibold text-[15px] disabled:opacity-50 whitespace-nowrap"
                 >
                   <span>{nlStatus === "sending" ? "..." : nlStatus === "error" ? "Retry" : "Subscribe"}</span>
                 </motion.button>
@@ -182,11 +182,11 @@ export default function Hero() {
 
           {/* Contact */}
           <div>
-            <h2 className="font-[family-name:var(--font-playfair)] text-xl font-semibold tracking-tight mb-1">
+            <h2 className="font-[family-name:var(--font-poppins)] text-2xl font-bold tracking-tight mb-1">
               Or <span className="gradient-text">work with me.</span>
             </h2>
             {cStatus === "sent" ? (
-              <p className="text-[#999] text-sm py-3">
+              <p className="text-[#c4c4c4] text-base py-3">
                 Got it. I&apos;ll be in touch within 48 hours.
               </p>
             ) : (
@@ -233,7 +233,7 @@ export default function Hero() {
                   disabled={cStatus === "sending"}
                   whileHover={{ scale: 1.005 }}
                   whileTap={{ scale: 0.995 }}
-                  className="w-full glow-button py-2.5 rounded-lg text-white font-medium text-[14px] disabled:opacity-50"
+                  className="w-full glow-button py-3 rounded-lg text-white font-semibold text-[15px] disabled:opacity-50"
                 >
                   <span>{cStatus === "sending" ? "Sending..." : cStatus === "error" ? "Try again" : "Send"}</span>
                 </motion.button>

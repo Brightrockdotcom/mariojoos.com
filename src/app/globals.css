@@ -3,19 +3,19 @@
 :root {
   --bg-primary: #050505;
   --bg-secondary: #0a0a0a;
-  --text-primary: #f5f5f5;
-  --text-secondary: #999;
-  --text-muted: #666;
+  --text-primary: #f7f7f7;
+  --text-secondary: #c2c2c2;
+  --text-muted: #8f8f8f;
   --accent: #e50914;
   --accent-orange: #ff6b35;
-  --border: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.08);
 }
 
 @theme inline {
   --color-background: var(--bg-primary);
   --color-foreground: var(--text-primary);
-  --font-sans: var(--font-inter);
-  --font-serif: var(--font-playfair);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-poppins);
 }
 
 html {
@@ -27,6 +27,10 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   overflow-x: hidden;
+  font-family: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
 }
 
 ::selection {
