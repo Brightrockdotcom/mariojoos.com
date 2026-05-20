@@ -10,6 +10,7 @@ export default function Contact() {
     name: "",
     email: "",
     channel: "",
+    service: "",
   });
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
@@ -27,13 +28,13 @@ export default function Contact() {
         {
           name: formData.name,
           email: formData.email,
-          message: formData.channel,
+          message: `Interested in: ${formData.service || "Not sure yet"} | Channel: ${formData.channel}`,
         },
       ]);
 
       if (error) throw error;
       setStatus("sent");
-      setFormData({ name: "", email: "", channel: "" });
+      setFormData({ name: "", email: "", channel: "", service: "" });
     } catch {
       setStatus("error");
     }
@@ -120,6 +121,23 @@ export default function Contact() {
                 className="w-full bg-[#111] border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-[#444] focus:outline-none focus:border-white/[0.15] transition-colors text-[15px]"
                 placeholder="youtube.com/@yourchannel"
               />
+            </div>
+
+            <div>
+              <label className="block font-mono text-[10px] uppercase tracking-[0.15em] text-[#666] mb-2">
+                What do you need help with?
+              </label>
+              <select
+                value={formData.service}
+                onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                className="w-full bg-[#111] border border-white/[0.08] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/[0.15] transition-colors text-[15px] appearance-none cursor-pointer"
+              >
+                <option value="">Not sure yet</option>
+                <option value="Retention Analysis">Retention Analysis</option>
+                <option value="Content Strategy">Content Strategy</option>
+                <option value="1:1 Consulting">1:1 Consulting</option>
+                <option value="Channel Architecture">Channel Architecture</option>
+              </select>
             </div>
 
             <motion.button

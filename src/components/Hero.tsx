@@ -4,6 +4,32 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCountUp } from "@/hooks/useCountUp";
 
+const creators = [
+  "MrBeast", "KSI", "Stokes Twins", "Preston", "Unspeakable", "ZHC",
+  "Dude Perfect", "SSSniperWolf", "Aphmau", "Ninja", "Typical Gamer",
+  "Lazarbeam", "Lachlan", "Muselk", "Kwebbelkop", "Jelly",
+];
+
+function CreatorMarquee() {
+  const doubled = [...creators, ...creators];
+  return (
+    <div className="relative w-full overflow-hidden">
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#050505] to-transparent z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#050505] to-transparent z-10" />
+      <div className="flex animate-scroll-left" style={{ animationDuration: "50s" }}>
+        {doubled.map((name, i) => (
+          <span
+            key={`${name}-${i}`}
+            className="flex-shrink-0 mx-5 font-mono text-[12px] uppercase tracking-[0.15em] text-[#555] whitespace-nowrap"
+          >
+            {name}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function StatCounter({
   end,
   suffix,
@@ -29,7 +55,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center px-6 py-20"
+      className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20"
     >
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.04] blur-[150px]" />
 
@@ -105,10 +131,10 @@ export default function Hero() {
             <span>Get in Touch</span>
           </a>
           <a
-            href="#case-studies"
+            href="#newsletter"
             className="glass-card px-8 py-3.5 rounded-full text-[#999] font-medium text-[15px] hover:text-white"
           >
-            View Results
+            Join the Newsletter
           </a>
         </motion.div>
 
@@ -127,17 +153,14 @@ export default function Hero() {
 
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.2 }}
-        transition={{ delay: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.6 }}
+        className="relative z-10 w-full max-w-3xl mx-auto mt-16"
       >
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
-          className="w-5 h-8 border border-white/10 rounded-full flex justify-center pt-1.5"
-        >
-          <div className="w-1 h-1 bg-white/30 rounded-full" />
-        </motion.div>
+        <p className="text-center font-mono text-[10px] uppercase tracking-[0.2em] text-[#444] mb-5">
+          Trusted by the creators behind billions of views
+        </p>
+        <CreatorMarquee />
       </motion.div>
     </section>
   );

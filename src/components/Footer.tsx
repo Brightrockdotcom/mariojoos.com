@@ -22,13 +22,17 @@ export default function Footer() {
               Navigate
             </h4>
             <ul className="space-y-2">
-              {["About", "Services", "Work", "Contact"].map((link) => (
-                <li key={link}>
+              {[
+                { label: "Work", href: "#case-studies" },
+                { label: "Newsletter", href: "#newsletter" },
+                { label: "Contact", href: "#contact" },
+              ].map((link) => (
+                <li key={link.label}>
                   <a
-                    href={`#${link.toLowerCase()}`}
+                    href={link.href}
                     className="text-[#333] hover:text-[#888] transition-colors text-sm"
                   >
-                    {link}
+                    {link.label}
                   </a>
                 </li>
               ))}
