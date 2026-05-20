@@ -106,3 +106,16 @@ body {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--border), transparent);
 }
+
+/* Hero two-column layout (own CSS so the column ratio is guaranteed in the
+   production build, not dependent on Tailwind arbitrary-value detection). */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1.5fr 1fr;
+  }
+}

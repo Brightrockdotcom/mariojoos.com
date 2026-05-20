@@ -150,7 +150,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-        className="relative z-10 w-full max-w-6xl mx-auto grid lg:grid-cols-[1.5fr_1fr] gap-10 lg:gap-16 items-center"
+        className="relative z-10 w-full max-w-6xl mx-auto hero-grid gap-10 lg:gap-16 items-center"
       >
         {/* LEFT — who I am, with headshot behind the text */}
         <div className="relative text-center lg:text-left">
