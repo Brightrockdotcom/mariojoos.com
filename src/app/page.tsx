@@ -1,6 +1,5 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
 import Services from "@/components/Services";
 import Stats from "@/components/Stats";
 import RetentionChart from "@/components/RetentionChart";
@@ -19,8 +18,6 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <div className="section-divider" />
-        <About />
         <div className="section-divider" />
         <Services />
         <div className="section-divider" />

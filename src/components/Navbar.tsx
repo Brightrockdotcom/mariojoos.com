@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 
 const navItems = [
-  { id: "about", label: "About" },
   { id: "services", label: "Services" },
   { id: "retention", label: "Retention" },
   { id: "case-studies", label: "Work" },
