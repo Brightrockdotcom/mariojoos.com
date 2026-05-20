@@ -107,15 +107,28 @@ body {
   background: linear-gradient(90deg, transparent, var(--border), transparent);
 }
 
-/* Hero two-column layout (own CSS so the column ratio is guaranteed in the
+/* Hero 3-panel layout (own CSS so the column ratios are guaranteed in the
    production build, not dependent on Tailwind arbitrary-value detection). */
-.hero-grid {
+.hero-3col {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 2.5rem;
 }
 
-@media (min-width: 860px) {
-  .hero-grid {
-    grid-template-columns: 1.5fr 1fr;
+@media (min-width: 820px) {
+  .hero-3col {
+    grid-template-columns: 1.35fr 0.85fr 1.05fr;
+    gap: 2rem;
+    align-items: center;
+  }
+}
+
+.hero-panel {
+  text-align: center;
+}
+
+@media (min-width: 820px) {
+  .hero-panel {
+    text-align: left;
   }
 }
