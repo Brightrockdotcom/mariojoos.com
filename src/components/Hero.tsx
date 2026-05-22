@@ -132,7 +132,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         {/* PANEL 1 — Identity (headshot behind the title) */}
         <div className="hero-panel relative">
           {/* Large transparent headshot behind the headline */}
-          <div className="pointer-events-none absolute -z-10 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[440px] h-[520px] max-w-[140%]">
+          <div className="pointer-events-none absolute -z-10 top-1/2 -translate-y-[74%] left-1/2 -translate-x-1/2 w-[440px] h-[560px] max-w-[150%]">
             <Image
               src="/images/bannermario.png"
               alt="Mario Joos"
