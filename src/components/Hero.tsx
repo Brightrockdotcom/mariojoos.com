@@ -152,10 +152,6 @@ export default function Hero({ creators }: { creators: Creator[] }) {
             </div>
           </div>
 
-          <span className="text-[#a8a8a8] text-[11px] font-bold uppercase tracking-[0.18em] block mb-3">
-            Retention Strategy &mdash; YouTube Growth
-          </span>
-
           <h1 className="font-[family-name:var(--font-poppins)] text-3xl md:text-4xl xl:text-5xl font-bold leading-[1.1] tracking-[-0.01em] mb-4">
             The strategist behind YouTube&apos;s biggest{" "}
             <span className="gradient-text">creators.</span>
