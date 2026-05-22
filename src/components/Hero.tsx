@@ -136,28 +136,26 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         transition={{ duration: 0.9 }}
         className="relative z-10 w-full max-w-6xl mx-auto hero-3col"
       >
-        {/* PANEL 1 — Identity */}
-        <div className="hero-panel">
-          <div className="flex justify-center min-[820px]:justify-start mb-5">
-            <div className="relative w-44 h-52">
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-[#e50914]/20 to-[#ff6b35]/15 blur-2xl" />
-              <Image
-                src="/images/bannermario.png"
-                alt="Mario Joos"
-                fill
-                sizes="176px"
-                className="object-contain object-bottom relative"
-                priority
-              />
-            </div>
+        {/* PANEL 1 — Identity (headshot behind the title) */}
+        <div className="hero-panel relative">
+          {/* Large transparent headshot behind the headline */}
+          <div className="pointer-events-none absolute -z-10 top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[440px] h-[520px] max-w-[140%]">
+            <Image
+              src="/images/bannermario.png"
+              alt="Mario Joos"
+              fill
+              sizes="460px"
+              className="object-contain object-bottom opacity-90 [mask-image:radial-gradient(ellipse_at_center,black_60%,transparent_92%)]"
+              priority
+            />
           </div>
 
-          <h1 className="font-[family-name:var(--font-poppins)] text-3xl md:text-4xl xl:text-5xl font-bold leading-[1.1] tracking-[-0.01em] mb-4">
+          <h1 className="relative font-[family-name:var(--font-poppins)] text-3xl md:text-4xl xl:text-5xl font-bold leading-[1.1] tracking-[-0.01em] mb-4 [text-shadow:0_2px_30px_rgba(5,5,5,0.95)]">
             The strategist behind YouTube&apos;s biggest{" "}
             <span className="gradient-text">creators.</span>
           </h1>
 
-          <p className="text-[#c4c4c4] text-base leading-relaxed">
+          <p className="relative text-[#c4c4c4] text-base leading-relaxed [text-shadow:0_2px_20px_rgba(5,5,5,0.95)]">
             I turn retention data into strategies that keep audiences watching.
           </p>
         </div>
