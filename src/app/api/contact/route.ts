@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: process.env.CONTACT_FROM_EMAIL || "Mario Joos Website <onboarding@resend.dev>",
+            from: process.env.CONTACT_FROM_EMAIL || "Mario Joos Website <notifications@mariojoos.com>",
             to: [TO_EMAIL],
             reply_to: email,
             subject: `New inquiry from ${name}`,
