@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useCountUp } from "@/hooks/useCountUp";
-import { supabase } from "@/lib/supabase";
 import type { Creator } from "@/lib/creators";
 
 // Reduce a large follower total to an integer + unit suffix the counter can animate.
@@ -80,7 +79,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
   const [nlStatus, setNlStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   // Contact
-  const [form, setForm] = useState({ name: "", email: "", channel: "", service: "" });
+  const [form, setForm] = useState({ name: "", email: "", channel: "", message: "" });
   const [cStatus, setCStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const handleNewsletter = async (e: React.FormEvent) => {
@@ -104,20 +103,14 @@ export default function Hero({ creators }: { creators: Creator[] }) {
     e.preventDefault();
     setCStatus("sending");
     try {
-      if (!supabase) {
-        setCStatus("sent");
-        return;
-      }
-      const { error } = await supabase.from("contacts").insert([
-        {
-          name: form.name,
-          email: form.email,
-          message: `Interested in: ${form.service || "Not sure yet"} | Channel: ${form.channel}`,
-        },
-      ]);
-      if (error) throw error;
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
       setCStatus("sent");
-      setForm({ name: "", email: "", channel: "", service: "" });
+      setForm({ name: "", email: "", channel: "", message: "" });
     } catch {
       setCStatus("error");
     }
@@ -163,8 +156,8 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         {/* PANEL 2 — Proof */}
         <div className="hero-panel">
           <div className="glass-card rounded-2xl p-5 bg-[#0c0c0c]/60">
-            <StatRow end={10} suffix="B+" label="Views" />
-            <StatRow end={followers.end} suffix={followers.suffix} label="Followers" />
+            <StatRow end={50} suffix="B+" label="Combined Views" />
+            <StatRow end={followers.end} suffix={followers.suffix} label="Combined Followers" />
             <StatRow end={creatorCount} suffix="+" label="Creators" />
           </div>
 
@@ -246,23 +239,19 @@ export default function Hero({ creators }: { creators: Creator[] }) {
                 />
                 <input
                   type="text"
-                  required
                   value={form.channel}
                   onChange={(e) => setForm({ ...form, channel: e.target.value })}
-                  placeholder="youtube.com/@yourchannel"
+                  placeholder="youtube.com/@yourchannel (optional)"
                   className={inputClass}
                 />
-                <select
-                  value={form.service}
-                  onChange={(e) => setForm({ ...form, service: e.target.value })}
-                  className={`${inputClass} appearance-none cursor-pointer`}
-                >
-                  <option value="">What do you need help with?</option>
-                  <option value="Retention Analysis">Retention Analysis</option>
-                  <option value="Content Strategy">Content Strategy</option>
-                  <option value="1:1 Consulting">1:1 Consulting</option>
-                  <option value="Channel Architecture">Channel Architecture</option>
-                </select>
+                <textarea
+                  required
+                  rows={3}
+                  value={form.message}
+                  onChange={(e) => setForm({ ...form, message: e.target.value })}
+                  placeholder="What can I help you with?"
+                  className={`${inputClass} resize-none`}
+                />
                 <motion.button
                   type="submit"
                   disabled={cStatus === "sending"}
