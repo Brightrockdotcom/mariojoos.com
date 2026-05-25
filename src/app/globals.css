@@ -119,7 +119,7 @@ body {
   .hero-3col {
     grid-template-columns: 1.35fr 0.85fr 1.05fr;
     gap: 2rem;
-    align-items: center;
+    align-items: end;
   }
 }
 
