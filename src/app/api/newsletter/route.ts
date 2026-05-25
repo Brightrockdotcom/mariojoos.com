@@ -33,10 +33,18 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    if (!res.ok) throw new Error(`Beehiiv responded ${res.status}`);
+    if (!res.ok) {
+      const detail = await res.text().catch(() => "");
+      console.error("Beehiiv subscribe failed:", res.status, detail);
+      return NextResponse.json(
+        { error: "Failed to subscribe", status: res.status },
+        { status: 502 }
+      );
+    }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("Newsletter route error:", err);
     return NextResponse.json({ error: "Failed to subscribe" }, { status: 500 });
   }
 }
