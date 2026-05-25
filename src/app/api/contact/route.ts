@@ -30,9 +30,10 @@ export async function POST(req: NextRequest) {
 
     // 1) Email via Resend REST API (no SDK needed). Recipient is hardcoded above.
     const resendKey = process.env.RESEND_API_KEY;
+    let emailStatus = "resend-not-configured";
     if (resendKey) {
       try {
-        await fetch("https://api.resend.com/emails", {
+        const r = await fetch("https://api.resend.com/emails", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${resendKey}`,
@@ -46,8 +47,16 @@ export async function POST(req: NextRequest) {
             text,
           }),
         });
-      } catch {
-        // fall through to the Supabase record below
+        if (r.ok) {
+          emailStatus = "sent";
+        } else {
+          const detail = await r.text().catch(() => "");
+          console.error("Resend send failed:", r.status, detail);
+          emailStatus = `resend-${r.status}`;
+        }
+      } catch (err) {
+        console.error("Resend request error:", err);
+        emailStatus = "resend-error";
       }
     }
 
@@ -62,7 +71,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, email: emailStatus });
   } catch {
     return NextResponse.json({ error: "Failed to submit message" }, { status: 500 });
   }
