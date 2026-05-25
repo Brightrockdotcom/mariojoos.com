@@ -35,11 +35,11 @@ function StatRow({ end, suffix, label }: { end: number; suffix: string; label: s
   );
 }
 
-function CreatorRow({ creator }: { creator: Creator }) {
+function CreatorChip({ creator }: { creator: Creator }) {
   const [imgFailed, setImgFailed] = useState(false);
   const showImg = creator.profileImageUrl && !imgFailed;
   return (
-    <div className="flex items-center gap-2.5">
+    <span className="flex items-center gap-2.5 mx-4 flex-shrink-0">
       <span className="relative w-7 h-7 rounded-full overflow-hidden border border-white/10 bg-[#1a1a1a] flex items-center justify-center flex-shrink-0">
         {showImg ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -54,15 +54,30 @@ function CreatorRow({ creator }: { creator: Creator }) {
           <span className="text-[10px] font-bold text-[#aaa]">{initials(creator.name)}</span>
         )}
       </span>
-      <span className="text-[13px] font-semibold text-[#cfcfcf] truncate">
+      <span className="text-[13px] font-semibold text-[#cfcfcf] whitespace-nowrap">
         {creator.name ?? "Verified creator"}
       </span>
+    </span>
+  );
+}
+
+function CreatorMarquee({ creators }: { creators: Creator[] }) {
+  const doubled = [...creators, ...creators];
+  return (
+    <div className="relative w-full overflow-hidden">
+      <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-[#050505] to-transparent z-10" />
+      <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-[#050505] to-transparent z-10" />
+      <div className="flex animate-scroll-left items-center" style={{ animationDuration: "55s" }}>
+        {doubled.map((c, i) => (
+          <CreatorChip key={`${c.channelId}-${i}`} creator={c} />
+        ))}
+      </div>
     </div>
   );
 }
 
 const inputClass =
-  "w-full bg-[#141414] border border-white/[0.12] rounded-lg px-3.5 py-2.5 text-white placeholder-[#777] focus:outline-none focus:border-white/[0.25] transition-colors text-[14px]";
+  "w-full bg-[#141414] border border-white/[0.12] rounded-lg px-3.5 py-2 text-white placeholder-[#777] focus:outline-none focus:border-white/[0.25] transition-colors text-[14px]";
 
 export default function Hero({ creators }: { creators: Creator[] }) {
   // Live stats derived from the verified-creators data (fallbacks when empty).
@@ -72,7 +87,6 @@ export default function Hero({ creators }: { creators: Creator[] }) {
     ? creators.reduce((sum, c) => sum + (c.followerCount ?? 0), 0)
     : 1_200_000_000;
   const followers = formatCount(totalFollowers);
-  const topCreators = creators.slice(0, 6);
 
   // Newsletter
   const [email, setEmail] = useState("");
@@ -119,7 +133,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-6 py-12 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center px-6 py-6 overflow-hidden"
     >
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.05] blur-[150px] pointer-events-none" />
 
@@ -160,23 +174,10 @@ export default function Hero({ creators }: { creators: Creator[] }) {
             <StatRow end={followers.end} suffix={followers.suffix} label="Combined Followers" />
             <StatRow end={creatorCount} suffix="+" label="Creators" />
           </div>
-
-          {topCreators.length > 0 && (
-            <div className="mt-5">
-              <p className="text-[#7d7d7d] text-[11px] font-semibold uppercase tracking-[0.15em] mb-3">
-                Verified creators
-              </p>
-              <div className="space-y-2.5">
-                {topCreators.map((c) => (
-                  <CreatorRow key={c.channelId} creator={c} />
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         {/* PANEL 3 — Act */}
-        <div className="glass-card rounded-2xl p-5 md:p-6 space-y-5 bg-[#0c0c0c]/90 backdrop-blur-md text-left">
+        <div className="glass-card rounded-2xl p-5 space-y-4 bg-[#0c0c0c]/90 backdrop-blur-md text-left">
           {/* Newsletter */}
           <div>
             <h2 className="font-[family-name:var(--font-poppins)] text-xl font-bold tracking-tight mb-1">
@@ -266,6 +267,20 @@ export default function Hero({ creators }: { creators: Creator[] }) {
           </div>
         </div>
       </motion.div>
+
+      {creators.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.9, delay: 0.3 }}
+          className="relative z-10 w-full max-w-6xl mx-auto mt-6"
+        >
+          <p className="text-center text-[#7d7d7d] text-[11px] font-semibold uppercase tracking-[0.15em] mb-3">
+            Verified creators
+          </p>
+          <CreatorMarquee creators={creators} />
+        </motion.div>
+      )}
     </section>
   );
 }
