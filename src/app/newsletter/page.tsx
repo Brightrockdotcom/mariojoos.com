@@ -4,11 +4,11 @@ import NewsletterForm from "./NewsletterForm";
 export const metadata: Metadata = {
   title: "Newsletter — Mario Joos",
   description:
-    "Retention tactics in your inbox. The breakdowns Mario Joos sends creators — what actually keeps audiences watching.",
+    "Retention insights in your inbox. Industry insights and exclusive strategies to keep people watching.",
   openGraph: {
     title: "Newsletter — Mario Joos",
     description:
-      "Retention tactics in your inbox. What actually keeps audiences watching.",
+      "Retention insights in your inbox. Industry insights and exclusive strategies to keep people watching.",
     url: "https://mariojoos.com/newsletter",
     siteName: "Mario Joos",
     type: "website",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Newsletter — Mario Joos",
     description:
-      "Retention tactics in your inbox. What actually keeps audiences watching.",
+      "Retention insights in your inbox. Industry insights and exclusive strategies to keep people watching.",
   },
 };
 

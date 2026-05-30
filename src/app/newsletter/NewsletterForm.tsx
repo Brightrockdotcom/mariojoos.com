@@ -43,13 +43,13 @@ export default function NewsletterForm() {
         </Link>
 
         <h1 className="font-[family-name:var(--font-poppins)] text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight mb-5">
-          Retention tactics,{" "}
+          Retention insights,{" "}
           <span className="gradient-text">in your inbox.</span>
         </h1>
 
         <p className="text-[#c4c4c4] text-lg md:text-xl leading-relaxed mb-10">
-          The breakdowns I send creators &mdash; what actually keeps audiences
-          watching. No fluff. Unsubscribe anytime.
+          Don&apos;t miss anything I put out there, from industry insights, to
+          exclusive strategies to keep people watching.
         </p>
 
         {status === "sent" ? (
