@@ -176,18 +176,26 @@ export default function NewsletterLanding({ creators }: { creators: Creator[] })
 
         <CreatorMarqueeSection creators={creators} />
 
-        {/* Contact-me button under everything */}
-        <motion.button
-          type="button"
-          onClick={() => setContactOpen(true)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          whileHover={{ y: -1 }}
-          className="relative z-10 mt-5 text-[12px] text-[#888] hover:text-white font-semibold uppercase tracking-[0.18em] transition-colors"
+        {/* Contact-me CTA under everything */}
+        <motion.div
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="relative z-10 mt-6 flex flex-col items-center gap-2"
         >
-          Or contact me &rarr;
-        </motion.button>
+          <p className="text-[#9a9a9a] text-[13px]">
+            Got a channel question? Need a strategist?
+          </p>
+          <motion.button
+            type="button"
+            onClick={() => setContactOpen(true)}
+            whileHover={{ scale: 1.03, y: -1 }}
+            whileTap={{ scale: 0.98 }}
+            className="glow-button px-7 py-3 rounded-full text-white font-semibold text-[15px] shadow-lg shadow-[#e50914]/20"
+          >
+            <span>Contact me &rarr;</span>
+          </motion.button>
+        </motion.div>
       </section>
 
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
