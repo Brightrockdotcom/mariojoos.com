@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import NewsletterForm from "./NewsletterForm";
+import NewsletterLanding from "./NewsletterLanding";
+import { getCreators } from "@/lib/creators";
 
 export const metadata: Metadata = {
   title: "Newsletter — Mario Joos",
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function NewsletterPage() {
-  return <NewsletterForm />;
+export default async function NewsletterPage() {
+  const creators = await getCreators();
+  return <NewsletterLanding creators={creators} />;
 }
