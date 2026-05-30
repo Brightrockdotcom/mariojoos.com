@@ -6,6 +6,7 @@ import type { Creator } from "@/lib/creators";
 import {
   IdentityPanel,
   StatsPanel,
+  ContactForm,
   CreatorMarqueeSection,
 } from "./hero-pieces";
 
@@ -16,10 +17,6 @@ export default function Hero({ creators }: { creators: Creator[] }) {
   // Newsletter
   const [email, setEmail] = useState("");
   const [nlStatus, setNlStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
-
-  // Contact
-  const [form, setForm] = useState({ name: "", email: "", channel: "", message: "" });
-  const [cStatus, setCStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,23 +35,6 @@ export default function Hero({ creators }: { creators: Creator[] }) {
     }
   };
 
-  const handleContact = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setCStatus("sending");
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error();
-      setCStatus("sent");
-      setForm({ name: "", email: "", channel: "", message: "" });
-    } catch {
-      setCStatus("error");
-    }
-  };
-
   return (
     <section
       id="hero"
@@ -68,10 +48,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         transition={{ duration: 0.9 }}
         className="relative z-10 w-full max-w-6xl mx-auto hero-3col"
       >
-        {/* PANEL 1 — Identity */}
         <IdentityPanel />
-
-        {/* PANEL 2 — Proof */}
         <StatsPanel creators={creators} />
 
         {/* PANEL 3 — Act */}
@@ -117,54 +94,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
             <h2 className="font-[family-name:var(--font-poppins)] text-xl font-bold tracking-tight mb-1">
               Or <span className="gradient-text">work with me.</span>
             </h2>
-            {cStatus === "sent" ? (
-              <p className="text-[#c4c4c4] text-base py-2">
-                Got it. I&apos;ll be in touch within 48 hours.
-              </p>
-            ) : (
-              <form onSubmit={handleContact} className="space-y-2.5 mt-3">
-                <input
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  placeholder="Name"
-                  className={inputClass}
-                />
-                <input
-                  type="email"
-                  required
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  placeholder="Email"
-                  className={inputClass}
-                />
-                <input
-                  type="text"
-                  value={form.channel}
-                  onChange={(e) => setForm({ ...form, channel: e.target.value })}
-                  placeholder="youtube.com/@yourchannel (optional)"
-                  className={inputClass}
-                />
-                <textarea
-                  required
-                  rows={3}
-                  value={form.message}
-                  onChange={(e) => setForm({ ...form, message: e.target.value })}
-                  placeholder="What can I help you with?"
-                  className={`${inputClass} resize-none`}
-                />
-                <motion.button
-                  type="submit"
-                  disabled={cStatus === "sending"}
-                  whileHover={{ scale: 1.005 }}
-                  whileTap={{ scale: 0.995 }}
-                  className="w-full glow-button py-2.5 rounded-lg text-white font-semibold text-[14px] disabled:opacity-50"
-                >
-                  <span>{cStatus === "sending" ? "Sending..." : cStatus === "error" ? "Try again" : "Send"}</span>
-                </motion.button>
-              </form>
-            )}
+            <ContactForm />
           </div>
         </div>
       </motion.div>

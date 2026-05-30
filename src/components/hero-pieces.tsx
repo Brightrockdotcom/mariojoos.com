@@ -122,6 +122,87 @@ export function StatsPanel({ creators }: { creators: Creator[] }) {
   );
 }
 
+// Standalone contact form (used in the homepage hero panel and the /newsletter modal).
+// Sends to /api/contact which emails mario@brightrock.com server-side.
+const contactInput =
+  "w-full bg-[#141414] border border-white/[0.12] rounded-lg px-3.5 py-2.5 text-white placeholder-[#777] focus:outline-none focus:border-white/[0.25] transition-colors text-[14px]";
+
+export function ContactForm({ onSent }: { onSent?: () => void } = {}) {
+  const [form, setForm] = useState({ name: "", email: "", channel: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error();
+      setStatus("sent");
+      setForm({ name: "", email: "", channel: "", message: "" });
+      onSent?.();
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "sent") {
+    return (
+      <p className="text-[#c4c4c4] text-base py-2">
+        Got it. I&apos;ll be in touch within 48 hours.
+      </p>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-2.5 mt-3">
+      <input
+        type="text"
+        required
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
+        placeholder="Name"
+        className={contactInput}
+      />
+      <input
+        type="email"
+        required
+        value={form.email}
+        onChange={(e) => setForm({ ...form, email: e.target.value })}
+        placeholder="Email"
+        className={contactInput}
+      />
+      <input
+        type="text"
+        value={form.channel}
+        onChange={(e) => setForm({ ...form, channel: e.target.value })}
+        placeholder="youtube.com/@yourchannel (optional)"
+        className={contactInput}
+      />
+      <textarea
+        required
+        rows={3}
+        value={form.message}
+        onChange={(e) => setForm({ ...form, message: e.target.value })}
+        placeholder="What can I help you with?"
+        className={`${contactInput} resize-none`}
+      />
+      <motion.button
+        type="submit"
+        disabled={status === "sending"}
+        whileHover={{ scale: 1.005 }}
+        whileTap={{ scale: 0.995 }}
+        className="w-full glow-button py-2.5 rounded-lg text-white font-semibold text-[14px] disabled:opacity-50"
+      >
+        <span>{status === "sending" ? "Sending..." : status === "error" ? "Try again" : "Send"}</span>
+      </motion.button>
+    </form>
+  );
+}
+
 // Full-width labelled creator marquee strip.
 export function CreatorMarqueeSection({ creators }: { creators: Creator[] }) {
   if (creators.length === 0) return null;
