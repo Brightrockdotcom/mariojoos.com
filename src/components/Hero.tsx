@@ -25,7 +25,7 @@ function initials(name: string | null): string {
 function StatRow({ end, suffix, label }: { end: number; suffix: string; label: string }) {
   const { count, ref } = useCountUp(end, 2200);
   return (
-    <div ref={ref} className="flex items-baseline justify-between gap-3 py-2 border-b border-white/[0.06] last:border-0">
+    <div ref={ref} className="flex items-baseline justify-between gap-3 py-1.5 border-b border-white/[0.06] last:border-0">
       <span className="text-[#9a9a9a] text-[11px] uppercase tracking-[0.12em] font-medium">{label}</span>
       <span className="font-[family-name:var(--font-poppins)] text-2xl font-bold text-white tracking-tight whitespace-nowrap">
         {count}
@@ -133,7 +133,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-6 py-6 overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center px-6 py-4 overflow-hidden"
     >
       <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#e50914]/[0.05] blur-[150px] pointer-events-none" />
 
@@ -169,7 +169,7 @@ export default function Hero({ creators }: { creators: Creator[] }) {
 
         {/* PANEL 2 — Proof */}
         <div className="hero-panel">
-          <div className="glass-card rounded-2xl p-5 bg-[#0c0c0c]/60">
+          <div className="glass-card rounded-2xl p-4 bg-[#0c0c0c]/60">
             <StatRow end={50} suffix="B+" label="Combined Views" />
             <StatRow end={followers.end} suffix={followers.suffix} label="Combined Followers" />
             <StatRow end={creatorCount} suffix="+" label="Creators" />
@@ -177,13 +177,16 @@ export default function Hero({ creators }: { creators: Creator[] }) {
         </div>
 
         {/* PANEL 3 — Act */}
-        <div className="glass-card rounded-2xl p-5 space-y-4 bg-[#0c0c0c]/90 backdrop-blur-md text-left">
+        <div className="glass-card rounded-2xl p-4 space-y-4 bg-[#0c0c0c]/90 backdrop-blur-md text-left">
           {/* Newsletter */}
           <div>
             <h2 className="font-[family-name:var(--font-poppins)] text-xl font-bold tracking-tight mb-1">
-              Get the <span className="gradient-text">newsletter.</span>
+              Retention insights,{" "}
+              <span className="gradient-text">in your inbox.</span>
             </h2>
-            <p className="text-[#a8a8a8] text-[13px] mb-3">Retention tactics in your inbox.</p>
+            <p className="text-[#a8a8a8] text-[13px] mb-3 leading-snug">
+              Industry insights and exclusive strategies to keep people watching.
+            </p>
             {nlStatus === "sent" ? (
               <p className="text-[#ff6b35] text-sm py-1">You&apos;re in. Check your inbox.</p>
             ) : (
@@ -273,9 +276,9 @@ export default function Hero({ creators }: { creators: Creator[] }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.3 }}
-          className="relative z-10 w-full max-w-6xl mx-auto mt-6"
+          className="relative z-10 w-full max-w-6xl mx-auto mt-4"
         >
-          <p className="text-center text-[#7d7d7d] text-[11px] font-semibold uppercase tracking-[0.15em] mb-3">
+          <p className="text-center text-[#7d7d7d] text-[11px] font-semibold uppercase tracking-[0.15em] mb-2">
             Verified creators
           </p>
           <CreatorMarquee creators={creators} />
