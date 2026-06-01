@@ -12,6 +12,20 @@ export async function POST(req: NextRequest) {
     const channel = String(body.channel ?? "").trim();
     const message = String(body.message ?? "").trim();
 
+    // --- Anti-spam ---
+    // Honeypot: real users never fill the hidden "website" field.
+    const honeypot = String(body.website ?? "").trim();
+    if (honeypot) {
+      console.warn("Contact spam blocked by honeypot");
+      return NextResponse.json({ success: true });
+    }
+    // Time check: real visitors take >= 1.5s; bots usually submit instantly.
+    const loadedAt = Number(body._t);
+    if (Number.isFinite(loadedAt) && Date.now() - loadedAt < 1500) {
+      console.warn("Contact spam blocked by time check");
+      return NextResponse.json({ success: true });
+    }
+
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Name, email, and message are required" },

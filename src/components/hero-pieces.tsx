@@ -129,6 +129,10 @@ const contactInput =
 
 export function ContactForm({ onSent }: { onSent?: () => void } = {}) {
   const [form, setForm] = useState({ name: "", email: "", channel: "", message: "" });
+  // Honeypot field: bots fill this; real users never see it.
+  const [website, setWebsite] = useState("");
+  // Capture form-load time once; submissions faster than ~1.5s look like bots.
+  const [loadedAt] = useState(() => Date.now());
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -138,7 +142,7 @@ export function ContactForm({ onSent }: { onSent?: () => void } = {}) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, website, _t: loadedAt }),
       });
       if (!res.ok) throw new Error();
       setStatus("sent");
@@ -159,6 +163,20 @@ export function ContactForm({ onSent }: { onSent?: () => void } = {}) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-2.5 mt-3">
+      {/* Honeypot — hidden from humans, attractive to bots. Do not remove. */}
+      <div aria-hidden="true" className="absolute -left-[9999px] top-auto w-px h-px overflow-hidden">
+        <label>
+          Website
+          <input
+            type="text"
+            tabIndex={-1}
+            autoComplete="off"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </label>
+      </div>
+
       <input
         type="text"
         required
